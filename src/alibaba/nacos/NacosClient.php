@@ -4,6 +4,7 @@
 namespace alibaba\nacos;
 
 
+use alibaba\nacos\listener\config\ConfigChangedListener;
 use Exception;
 use alibaba\nacos\util\LogUtil;
 use alibaba\nacos\listener\config\Config;
@@ -44,6 +45,7 @@ class NacosClient implements NacosClientInterface
 
                     // 保存最新的配置
                     LocalConfigInfoProcessor::saveSnapshot($env, $dataId, $group, $tenant, $config);
+                    ConfigChangedListener::notify($config);
                 }
             } catch (Exception $e) {
                 LogUtil::error("listener请求异常, e: " . $e->getMessage());
