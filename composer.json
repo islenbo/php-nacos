@@ -1,18 +1,19 @@
 {
-  "name": "alibaba/nacos",
+  "name": "islenbo/nacos",
   "description": "阿里巴巴nacos配置中心php客户端",
   "type": "library",
   "license": "MIT",
   "authors": [
     {
-      "name": "suxiaolin",
-      "email": "dear.lin@live.com"
+      "name": "lenbo",
+      "email": "islenbo@qq.com"
     }
   ],
   "require": {
-    "guzzlehttp/guzzle": "^6.3",
-    "monolog/monolog": "^1.24|^2.0",
-    "ext-json": "*"
+    "php": "^7.3",
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^7.0",
+    "monolog/monolog": "^2.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.5|^8.0"
