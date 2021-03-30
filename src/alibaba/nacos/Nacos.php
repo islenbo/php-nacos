@@ -42,9 +42,9 @@ class Nacos
         return call_user_func_array([self::$clientClass, "get"], [NacosConfig::getEnv(), NacosConfig::getDataId(), NacosConfig::getGroup(), NacosConfig::getTenant()]);
     }
 
-    public function listener()
+    public function listener(int $loop = 0)
     {
-        call_user_func_array([self::$clientClass, "listener"], [NacosConfig::getEnv(), NacosConfig::getDataId(), NacosConfig::getGroup(), NacosConfig::getTenant()]);
+        call_user_func_array([self::$clientClass, "listener"], [NacosConfig::getEnv(), NacosConfig::getDataId(), NacosConfig::getGroup(), NacosConfig::getTenant(), $loop]);
         return $this;
     }
 

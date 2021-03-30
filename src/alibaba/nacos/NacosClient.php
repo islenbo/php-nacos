@@ -23,11 +23,11 @@ use alibaba\nacos\listener\config\ListenerConfigRequestErrorListener;
  */
 class NacosClient implements NacosClientInterface
 {
-    public static function listener($env, $dataId, $group, $config, $tenant = "")
+    public static function listener($env, $dataId, $group, $config, string $tenant = "", int $loop = 0)
     {
-        $loop = 0;
+        $loopCount = 0;
         do {
-            $loop++;
+            $loopCount++;
 
             $listenerConfigRequest = new ListenerConfigRequest();
             $listenerConfigRequest->setDataId($dataId);
@@ -53,7 +53,10 @@ class NacosClient implements NacosClientInterface
                 // 短暂休息会儿
                 usleep(500);
             }
-            LogUtil::info("listener loop count: " . $loop);
+            LogUtil::info("listener loop count: " . $loopCount);
+            if ($loop > 0 && $loopCount > $loop) {
+                break;
+            }
         } while (true);
     }
 

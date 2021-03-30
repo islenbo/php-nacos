@@ -20,7 +20,7 @@ class DummyNacosClient implements NacosClientInterface
         return $config;
     }
 
-    public static function listener($env, $dataId, $group, $config, $tenant = "")
+    public static function listener($env, $dataId, $group, $config, string $tenant = "", int $loop = 0)
     {
         do {
             // 短暂休息会儿
