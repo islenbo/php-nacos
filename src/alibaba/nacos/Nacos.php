@@ -13,6 +13,7 @@ use alibaba\nacos\util\LogUtil;
  */
 class Nacos
 {
+    /** @var NacosClientInterface */
     private static $clientClass;
 
     public static function init($host, $env, $dataId, $group, $tenant)
@@ -27,9 +28,9 @@ class Nacos
 
             if (getenv("NACOS_ENV") == "local") {
                 LogUtil::info("nacos run in dummy mode");
-                self::$clientClass = DummyNacosClient::class;
+                self::$clientClass = new DummyNacosClient();
             } else {
-                self::$clientClass = NacosClient::class;
+                self::$clientClass = new NacosClient();
             }
 
             $client = new self();
@@ -39,12 +40,12 @@ class Nacos
 
     public function runOnce()
     {
-        return call_user_func_array([self::$clientClass, "get"], [NacosConfig::getEnv(), NacosConfig::getDataId(), NacosConfig::getGroup(), NacosConfig::getTenant()]);
+        return self::$clientClass::get(NacosConfig::getEnv(), NacosConfig::getDataId(), NacosConfig::getGroup(), NacosConfig::getTenant() . '');
     }
 
     public function listener(int $loop = 0)
     {
-        call_user_func_array([self::$clientClass, "listener"], [NacosConfig::getEnv(), NacosConfig::getDataId(), NacosConfig::getGroup(), NacosConfig::getTenant(), $loop]);
+        self::$clientClass::listener(NacosConfig::getEnv(), NacosConfig::getDataId(), NacosConfig::getGroup(), '', NacosConfig::getTenant() . '', $loop);
         return $this;
     }
 
